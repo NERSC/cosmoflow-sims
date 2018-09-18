@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
 import numpy as np
 import os, shutil
 import math
@@ -8,8 +11,8 @@ import sys
 
 ## ddefining which files to run over. Basically this was added just to allow me to run multiple jobs in parallel. 
 
-start = int(sys.argv[1])
-stop = 2005
+start = 0
+stop = 2
 
 counter = -1
 ######## Loop over the files!
@@ -18,19 +21,20 @@ for afile in os.listdir("OmSiNs/"):
         continue
     infile = "OmSiNs/"+afile
 
+    print ('Input=',infile,' of',counter)
     counter+=1
     if counter<start or counter>stop:
         continue
 
-    print counter, infile
+    print (counter, infile)
 
     outdir = infile[:-4]
     if os.path.exists(outdir):
         if len(os.listdir(outdir))==8:
-            print "done this one!"
+            print ("done this one!")
             continue
         else:
-            print len(os.listdir(outdir))
+            print ('see len:',len(os.listdir(outdir)))
             ### this is a half-empty folder. delete it!
             shutil.rmtree(outdir)
 
@@ -43,7 +47,7 @@ for afile in os.listdir("OmSiNs/"):
     py = data['py']
     pz = data['pz']
 
-    print px[0][0][0], py[0][0][0], pz[0][0][0]
+    print ('pxyz: ',px[0][0][0], py[0][0][0], pz[0][0][0])
    
 
 
@@ -54,14 +58,14 @@ for afile in os.listdir("OmSiNs/"):
     pyf = np.ndarray.flatten(py)
     pzf = np.ndarray.flatten(pz)
 
-    print pxf.shape
-    print pxf[0], pyf[0], pzf[0]
+    print ('a', pxf.shape)
+    print ('b', pxf[0], pyf[0], pzf[0])
     ### so the flattening is working. Now make this into a 3d array...
     ps = np.vstack( (pxf, pyf, pzf) ).T
     
     del(pxf); del(pyf); del(pzf)
 
-    print "one big array!", ps.shape, ps[0,:]
+    print ("one big array!", ps.shape, ps[0,:])
 
     
     ## OK! Then this is indeed a big old array. Now I want to histogram it.
@@ -69,8 +73,8 @@ for afile in os.listdir("OmSiNs/"):
     nbins = 256
     H, bins = np.histogramdd(ps, nbins, range=((0,512),(0,512),(0,512)) )
 
-    print "histo dshape!", H.shape,  H[0][0][0]
-
+    print ("histo dshape!", H.shape,  H[0][0][0])
+    #print ('mass sum=%.3g'%np.sum(H))
    
 
     ### now I have my histogram of particle density, I split it up into 8 subvolumes and write it out
@@ -83,7 +87,8 @@ for afile in os.listdir("OmSiNs/"):
                 count+=1
                 d = H[i:(i+128),j:(j+128),k:(k+128)]
                 filename = outdir+"/"+str(count)+".npy"
+                print (count,'mass sum=%.3g'%np.sum(d))
                 np.save(filename, d)
-    print "got:", count
+    print ("got count :", count)
 
-    print "**************************"
+    print ("**************************")

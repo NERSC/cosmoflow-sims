@@ -219,7 +219,7 @@ if __name__ == '__main__':
             continue
 
         infile = "../MUSIC/OmSiNs/"+filename
-        print infile
+        print('work on :',infile)
         om = infile.split("_")[1]
         si = infile.split("_")[2]
         ns = infile.split("_")[3][:-5]
