@@ -1,0 +1,20 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+*~
+*pyc
+*yaml
+data*
+out*
+__pycache__/
+L*
+web/
+slurm-*
+*svg
+logs/*
+plot/
+*.so 
+*.npz
+pycola/build/
+wnoise_*.bin 
+ics*.conf
+MUSIC
+*log.txt

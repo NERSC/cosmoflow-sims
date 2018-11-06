@@ -1,0 +1,6 @@
+Jan's scheme simulating a single universe
+
+Single node Haswell Slumr job array : batchMakeUniverse.slr
+It executes script: makeOneUniverse.sh
+
+The job sandbox is at : wrkDir=$CSCRATCH/${coreN}-${arrIdx}

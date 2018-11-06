@@ -1,0 +1,34 @@
+#!/bin/bash -l
+
+#SBATCH --nodes=1 --account nstaff -J uni-reg --qos=regular
+#SBATCH --time=20:00   # takes 11 min  
+#-SBATCH --qos=debug --time=25:00 -J univ-dbg
+#-SBATCH --qos=premium -J univ-pr
+#SBATCH  -C haswell  
+
+#SBATCH --array=9-9
+
+arrIdx=${SLURM_ARRAY_TASK_ID}
+
+coreN='cosmoUniverse4/'${SLURM_ARRAY_JOB_ID}
+codeList=" makeOneUniverse.sh prepMusic.sh rdMeta.py pycola-OmSiNs-jan.py projectNBody.py Util_genCosmo.py ics_template.conf pack_tfrec.py Plotter_GenCosmo.py IO_Cosmo_TF1_8.py"
+date
+echo SLURM_CLUSTER_NAME=$SLURM_CLUSTER_NAME  numNodes=$SLURM_NNODES
+#env|grep SLURM
+
+srcDir=`pwd`
+wrkDir=$CSCRATCH/${coreN}-${arrIdx}
+mkdir -p ${wrkDir}/out
+mkdir -p ${wrkDir}/data
+cp -rp $codeList $wrkDir
+cd  $wrkDir 
+echo PWD=`pwd` 
+ls -l  $dataH5
+
+echo M_start-`date`
+./makeOneUniverse.sh
+echo M_done-`date`
+# mv slurm log to final destination - it is alwasy a job-array
+mv $srcDir/slurm-${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.out .
+
+
