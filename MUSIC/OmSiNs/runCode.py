@@ -56,7 +56,7 @@ if __name__ == '__main__':
     random.seed(18885294) ### have this be repeatably random! Note that this is for the param values, NOT the random initial conditions
 
 
-    nsamples = 4 ## How many simulations are we going to make? 
+    nsamples = 2 ## How many simulations are we going to make? 
     oms, sis, nss = [], [], []
     for i in range(0, nsamples): ### defining the ranges for the simulation parameters
         r1 = random.randrange(2500, 3500) ## Om_m 0.25 - 0.35

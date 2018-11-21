@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 #SBATCH --nodes=1 --account nstaff -J uni-reg --qos=regular
-#SBATCH --time=20:00   # takes 11 min  
+#SBATCH --time=18:00   # takes 12 min wall time
 #-SBATCH --qos=debug --time=25:00 -J univ-dbg
 #-SBATCH --qos=premium -J univ-pr
 #SBATCH  -C haswell  
@@ -10,8 +10,8 @@
 
 arrIdx=${SLURM_ARRAY_TASK_ID}
 
-coreN='cosmoUniverse4/'${SLURM_ARRAY_JOB_ID}
-codeList=" makeOneUniverse.sh prepMusic.sh rdMeta.py pycola-OmSiNs-jan.py projectNBody.py Util_genCosmo.py ics_template.conf pack_tfrec.py Plotter_GenCosmo.py IO_Cosmo_TF1_8.py"
+coreN='cosmoUniverse2/'${SLURM_ARRAY_JOB_ID}
+codeList=" makeOneUniverse.sh runMusic*.sh rdMeta.py pycola-OmSiNs-jan.py projectNBody.py  ics_template.conf pack_hd5_Pk."py
 date
 echo SLURM_CLUSTER_NAME=$SLURM_CLUSTER_NAME  numNodes=$SLURM_NNODES
 #env|grep SLURM
