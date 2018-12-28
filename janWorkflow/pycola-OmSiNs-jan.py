@@ -215,7 +215,7 @@ if __name__ == '__main__':
 
     #ymlF='outMusic/cosmoMeta.yaml'
     ioPath=sys.argv[1]
-    ymlF=ioPath+'/'+sys.argv[2]
+    ymlF=sys.argv[2]
     print "read YAML from ",ymlF,' and pprint it:'
     #inpFile=open(ymlF)
     blob=read_yaml(ymlF)

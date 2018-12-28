@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
-#SBATCH --nodes=1 --account nstaff -J uni-reg --qos=regular
-#SBATCH --time=18:00   # takes 12 min wall time
-#-SBATCH --qos=debug --time=25:00 -J univ-dbg
+#SBATCH --nodes=4 --account nstaff --time=18:00   # takes 12 min wall time
+#SBATCH --qos=regular -J uni-reg 
+#-SBATCH --qos=debug --time=18:00 -J univ-dbg
 #-SBATCH --qos=premium -J univ-pr
 #SBATCH  -C haswell  
 
@@ -10,23 +10,26 @@
 
 arrIdx=${SLURM_ARRAY_TASK_ID}
 
-coreN='cosmoUniverse2/'${SLURM_ARRAY_JOB_ID}
-codeList=" makeOneUniverse.sh runMusic*.sh rdMeta.py pycola-OmSiNs-jan.py projectNBody.py  ics_template.conf pack_hd5_Pk."py
+coreN='cosmoUniverse2b/'${SLURM_ARRAY_JOB_ID}
+codeList=" makeOneUniverse.sh *Music*.sh rdMeta.py pycola-OmSiNs-jan.py projectNBody.py  ics_template.conf pack_hd5_Pk."py
 date
 echo SLURM_CLUSTER_NAME=$SLURM_CLUSTER_NAME  numNodes=$SLURM_NNODES
 #env|grep SLURM
 
 srcDir=`pwd`
 wrkDir=$CSCRATCH/${coreN}-${arrIdx}
-mkdir -p ${wrkDir}/out
-mkdir -p ${wrkDir}/data
+mkdir -p ${wrkDir}
 cp -rp $codeList $wrkDir
 cd  $wrkDir 
 echo PWD=`pwd` 
 ls -l  $dataH5
+./prepMusic_4parC.sh $SLURM_NNODES ./
+
+echo 'U: PWD2 '`pwd`
+./rdMeta.py
 
 echo M_start-`date`
-./makeOneUniverse.sh
+srun --label ./makeOneUniverse.sh
 echo M_done-`date`
 # mv slurm log to final destination - it is alwasy a job-array
 mv $srcDir/slurm-${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.out .

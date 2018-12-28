@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     print('inp num args:',len(sys.argv))
     #ymlF='../janWorkflow/out/cosmoMeta.yaml'
-    ymlF='out/cosmoMeta.yaml'
+    ymlF='./cosmoMeta.yaml'
     if len(sys.argv)>1:
         ymlF=sys.argv[1]
     print ("read YAML from ",ymlF,' and pprint it:')

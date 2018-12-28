@@ -1,7 +1,15 @@
+Oryginal, repo: https://github.com/NERSC/cosmoflow-sims/
+
+cd cosmoflow-sims/janWorkflow
+
+
 Jan's scheme simulating a single universe
 
 Single node Haswell Slumr job array : batchMakeUniverse.slr
 It executes script: makeOneUniverse.sh
+Update1: -N4 would eun on 4 nodes and each node would do different stop-time
+Update2: add constraint Omega_L	= 1-Omega_m 
+
 
 The job sandbox is at : wrkDir=$CSCRATCH/${coreN}-${arrIdx}
 
