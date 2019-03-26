@@ -7,6 +7,18 @@ set -o errexit ;  # exit if any statement returns a non-true return value
 nSleep=1
 n=0
 date
+
+inpM=~/prj/cosmoflow-sims/janWorkflow/old3
+cd $inpM
+for i in $( ls slurm-18625370*   ); do
+    echo item: $i
+    arrIdx=${i:15:-4}
+    dirN=/global/cscratch1/sd/balewski/cosmoUniverse4a/18625370-$arrIdx
+    echo $arrIdx $dirN
+
+    rm -rf $dirN
+done
+exit
 outM=/global/cscratch1/sd/balewski/cosmoData_Jan3/meta/
 for K in {1..50} ; do
     echo -n submit K=$K ' ' 

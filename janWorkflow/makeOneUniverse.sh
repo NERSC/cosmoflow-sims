@@ -34,13 +34,17 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/common/software/fftw/3.3.4/hsw/gnu/
 
 time ./pycola-OmSiNs-jan.py  $outPath cosmoMeta.yaml
 
-echo U: start projection and  slicing
+echo U: start projection 
 time ./projectNBody.py $outPath ./cosmoMeta.yaml
-
+ls -l  $outPath
+echo U: start slicing 
+./sliceBigCube.py $outPath ./cosmoMeta.yaml
 
 echo U: done $outPath
+touch  $outPath/done.job
 ls -lh $outPath/*hdf5
 rm $outPath/*hdf5
+rm $outPath/*npz
 rm $outPath/wnoise*bin
 
 

@@ -3,14 +3,19 @@ from ruamel.yaml import YAML
 from pprint import pprint
 import sys
 
-def read_yaml(yaml_fn):
+def read_yaml(yaml_fn,verb=1):
         data={}
+
+        if verb:  print('  read  yaml:',yaml_fn)
         with open(yaml_fn) as yamlfile:
             for key, val in YAML().load(yamlfile).items():
-                #print('hpar:',key, val)
+                print('hpar:',key, val)
                 data[key]=val
-                #self.add_hparam(key, val)
+        assert len(data['namePar']) == len(data['unitPar'])
+        assert len(data['physPar']) == len(data['unitPar'])
+
         return data
+
 
 
 # = = = = = = = = = = = = =

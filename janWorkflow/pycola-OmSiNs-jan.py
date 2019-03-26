@@ -25,7 +25,7 @@ sys.path.append(os.path.abspath("/global/homes/b/balewski/prj/cosmoflow-sims/pyc
 ########################################################################
 ########################################################################
 
-def runit(infile, outfile, omM):
+def runit(infile, outfile, omM,boxlength):
     
     import numpy as np
     import matplotlib.pyplot as plt
@@ -41,7 +41,7 @@ def runit(infile, outfile, omM):
     # Set up according to instructions for 
     # aux.boundaries()
     
-    boxsize=512.0 # in Mpc/h
+    boxsize=boxlength # in Mpc/h
     level=9
     level_zoom=9
     gridscale=3
@@ -225,5 +225,5 @@ if __name__ == '__main__':
     infile=ioPath+'/'+blob['coreStr']+'.hdf5'
     outfile=infile.replace('.hdf5','.npz')
     physOmega_m=blob['physOmega_m']
-
-    runit(infile, outfile, physOmega_m)
+    boxlength = blob['boxlength']
+    runit(infile, outfile, physOmega_m,boxlength)
